@@ -5,7 +5,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Join Freebuild & Kill: Redux</title>
+<title>Freebuild & Kill: Redux — Join Server</title>
+<meta name="description" content="Join Freebuild & Kill: Redux, a classic Garry's Mod sandbox community. Build, fight, and experiment.">
+
+<link rel="icon" type="image/png" href="./logo.png">
 
 <style>
     * {
@@ -15,7 +18,13 @@
     body {
         margin: 0;
         min-height: 100vh;
-        background: #111417;
+        background:
+            radial-gradient(
+                ellipse at top,
+                #303238 0%,
+                #171a1e 55%,
+                #101215 100%
+            );
         color: #f1f2f4;
         font-family: Arial, Helvetica, sans-serif;
         display: flex;
@@ -28,65 +37,71 @@
         width: 100%;
         max-width: 520px;
         background: #1c2126;
-        border: 1px solid #343b42;
-        border-top: 4px solid #e9a44d;
-        padding: 36px;
+        border: 1px solid #393e45;
+        border-top: 4px solid #ee8055;
+        padding: 38px;
         text-align: center;
-        box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+        box-shadow: 0 20px 65px rgba(0, 0, 0, 0.45);
+    }
+
+    .logo {
+        display: block;
+        width: 100%;
+        max-width: 255px;
+        height: auto;
+        margin: 0 auto 24px;
+        filter: drop-shadow(
+            0 9px 16px rgba(0, 0, 0, 0.24)
+        );
     }
 
     .eyebrow {
-        color: #e9a44d;
+        color: #f6b17a;
         font-size: 11px;
+        font-weight: bold;
         letter-spacing: 3px;
-        font-weight: bold;
-        margin-bottom: 16px;
-    }
-
-    h1 {
-        font-size: 32px;
-        line-height: 1.1;
-        margin: 0;
-        font-weight: 800;
-    }
-
-    .redux {
-        color: #e9a44d;
-        font-size: 27px;
-        font-weight: bold;
-        letter-spacing: 7px;
-        margin-top: 6px;
+        margin-bottom: 22px;
     }
 
     .tagline {
-        color: #aeb7c0;
-        font-size: 14px;
-        margin: 23px 0 28px;
+        color: #c3c7ce;
+        font-size: 15px;
+        font-weight: 600;
+        margin: 0 0 12px;
+    }
+
+    .description {
+        color: #959fa9;
+        font-size: 13px;
+        line-height: 1.7;
+        margin: 0 0 28px;
     }
 
     .divider {
         height: 1px;
         background: #3b424a;
-        margin-bottom: 25px;
+        margin-bottom: 24px;
     }
 
     .server-info {
         background: #15191d;
         border: 1px solid #313840;
-        padding: 16px;
+        padding: 17px;
         margin-bottom: 20px;
     }
 
     .server-info small {
         display: block;
-        color: #9fa8b2;
-        margin-bottom: 8px;
-        letter-spacing: 1px;
+        color: #a0aab5;
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 9px;
     }
 
     .server-ip {
-        font-size: 18px;
+        font-size: 19px;
         font-weight: bold;
+        color: #fff;
         overflow-wrap: anywhere;
     }
 
@@ -95,38 +110,49 @@
         width: 100%;
         padding: 16px 12px;
         margin-top: 12px;
+        text-align: center;
         text-decoration: none;
         font-size: 14px;
         font-weight: bold;
         letter-spacing: 1px;
         cursor: pointer;
-        transition: background 0.2s;
+        transition:
+            background 0.2s,
+            transform 0.2s;
         border: none;
         font-family: inherit;
     }
 
+    .button:hover {
+        transform: translateY(-2px);
+    }
+
     .join {
-        background: #e9a44d;
-        color: #151515;
+        background: linear-gradient(
+            135deg,
+            #ffad79,
+            #eb744b
+        );
+        color: #1b1918;
     }
 
     .join:hover {
-        background: #ffbf69;
+        background: #ffbd91;
     }
 
     .workshop {
-        background: #303840;
-        color: #ffffff;
+        background: #333a42;
+        color: #fff;
     }
 
     .workshop:hover {
-        background: #46515c;
+        background: #49515b;
     }
 
     .copy {
         background: transparent;
         border: 1px solid #49535d;
-        color: #bfc8d1;
+        color: #c2cad3;
     }
 
     .copy:hover {
@@ -134,30 +160,36 @@
     }
 
     .notice {
+        color: #969fa9;
         font-size: 12px;
-        color: #919ba5;
-        margin-top: 24px;
         line-height: 1.7;
+        margin-top: 24px;
     }
 
     .footer {
-        margin-top: 30px;
-        color: #6f7984;
+        border-top: 1px solid #363c43;
+        color: #7f8994;
         font-size: 11px;
         letter-spacing: 1px;
+        margin-top: 30px;
+        padding-top: 20px;
+    }
+
+    .footer span {
+        color: #e99a6c;
     }
 
     @media (max-width: 480px) {
         .container {
-            padding: 24px;
+            padding: 25px;
         }
 
-        h1 {
-            font-size: 26px;
+        .logo {
+            max-width: 210px;
         }
 
-        .redux {
-            font-size: 23px;
+        .server-ip {
+            font-size: 16px;
         }
     }
 </style>
@@ -165,23 +197,33 @@
 
 <body>
 
-<div class="container">
+<main class="container">
+
+    <img
+        class="logo"
+        src="./logo.png"
+        alt="Freebuild & Kill: Redux logo"
+    >
 
     <div class="eyebrow">
         GARRY'S MOD SANDBOX
     </div>
 
-    <h1>FREEBUILD & KILL</h1>
-    <div class="redux">REDUX</div>
-
-    <div class="tagline">
+    <p class="tagline">
         Build it. Fight it. Break it. Repeat.
-    </div>
+    </p>
+
+    <p class="description">
+        Old-school sandbox chaos with a fresh coat of paint.
+        Build ridiculous contraptions, engineer vehicles,
+        battle your friends, or just hang out.
+    </p>
 
     <div class="divider"></div>
 
     <div class="server-info">
-        <small>DIRECT CONNECTION</small>
+        <small>SERVER ADDRESS</small>
+
         <div class="server-ip">
             193.243.190.128:27015
         </div>
@@ -190,7 +232,7 @@
     <a
         class="button join"
         href="steam://connect/193.243.190.128:27015">
-        JOIN SERVER
+        ▶ JOIN SERVER
     </a>
 
     <a
@@ -198,7 +240,7 @@
         href="https://steamcommunity.com/sharedfiles/filedetails/?id=3821091397"
         target="_blank"
         rel="noopener noreferrer">
-        WORKSHOP COLLECTION
+        STEAM WORKSHOP COLLECTION
     </a>
 
     <button
@@ -209,28 +251,31 @@
     </button>
 
     <div class="notice">
-        Garry's Mod and Steam are required.<br>
+        Steam and Garry's Mod are required.<br>
         Your browser may ask permission to open Steam.<br>
-        If the join button doesn't work, connect manually.
+        If joining fails, use the server IP manually.
     </div>
 
     <div class="footer">
-        FREEBUILD & KILL: REDUX
-        <p>BUILD. FIGHT. EXPERIMENT. REPEAT.</p>
+        FREEBUILD & KILL: <span>REDUX</span>
+        <p>OLD-SCHOOL CHAOS. NEW-SCHOOL POLISH.</p>
     </div>
 
-</div>
+</main>
 
 <script>
     const serverIP = "193.243.190.128:27015";
-    const copyButton = document.getElementById("copyButton");
 
-    copyButton.addEventListener("click", async function () {
+    const copyButton =
+        document.getElementById("copyButton");
+
+    copyButton.addEventListener("click", async () => {
         try {
             await navigator.clipboard.writeText(serverIP);
             copyButton.textContent = "COPIED!";
         } catch (error) {
-            copyButton.textContent = "COPY FAILED - SELECT IP ABOVE";
+            copyButton.textContent =
+                "COPY FAILED - SELECT IP ABOVE";
         }
     });
 </script>
