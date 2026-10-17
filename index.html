@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Join Freebuild & Kill: Redux</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: #111417;
+        color: #f1f2f4;
+        font-family: Arial, Helvetica, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 520px;
+        background: #1c2126;
+        border: 1px solid #343b42;
+        border-top: 4px solid #e9a44d;
+        padding: 36px;
+        text-align: center;
+        box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+    }
+
+    .eyebrow {
+        color: #e9a44d;
+        font-size: 11px;
+        letter-spacing: 3px;
+        font-weight: bold;
+        margin-bottom: 16px;
+    }
+
+    h1 {
+        font-size: 32px;
+        line-height: 1.1;
+        margin: 0;
+        font-weight: 800;
+    }
+
+    .redux {
+        color: #e9a44d;
+        font-size: 27px;
+        font-weight: bold;
+        letter-spacing: 7px;
+        margin-top: 6px;
+    }
+
+    .tagline {
+        color: #aeb7c0;
+        font-size: 14px;
+        margin: 23px 0 28px;
+    }
+
+    .divider {
+        height: 1px;
+        background: #3b424a;
+        margin-bottom: 25px;
+    }
+
+    .server-info {
+        background: #15191d;
+        border: 1px solid #313840;
+        padding: 16px;
+        margin-bottom: 20px;
+    }
+
+    .server-info small {
+        display: block;
+        color: #9fa8b2;
+        margin-bottom: 8px;
+        letter-spacing: 1px;
+    }
+
+    .server-ip {
+        font-size: 18px;
+        font-weight: bold;
+        overflow-wrap: anywhere;
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        padding: 16px 12px;
+        margin-top: 12px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border: none;
+        font-family: inherit;
+    }
+
+    .join {
+        background: #e9a44d;
+        color: #151515;
+    }
+
+    .join:hover {
+        background: #ffbf69;
+    }
+
+    .workshop {
+        background: #303840;
+        color: #ffffff;
+    }
+
+    .workshop:hover {
+        background: #46515c;
+    }
+
+    .copy {
+        background: transparent;
+        border: 1px solid #49535d;
+        color: #bfc8d1;
+    }
+
+    .copy:hover {
+        background: #303840;
+    }
+
+    .notice {
+        font-size: 12px;
+        color: #919ba5;
+        margin-top: 24px;
+        line-height: 1.7;
+    }
+
+    .footer {
+        margin-top: 30px;
+        color: #6f7984;
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            padding: 24px;
+        }
+
+        h1 {
+            font-size: 26px;
+        }
+
+        .redux {
+            font-size: 23px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="eyebrow">
+        GARRY'S MOD SANDBOX
+    </div>
+
+    <h1>FREEBUILD & KILL</h1>
+    <div class="redux">REDUX</div>
+
+    <div class="tagline">
+        Build it. Fight it. Break it. Repeat.
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="server-info">
+        <small>DIRECT CONNECTION</small>
+        <div class="server-ip">
+            193.243.190.128:27015
+        </div>
+    </div>
+
+    <a
+        class="button join"
+        href="steam://connect/193.243.190.128:27015">
+        JOIN SERVER
+    </a>
+
+    <a
+        class="button workshop"
+        href="https://steamcommunity.com/sharedfiles/filedetails/?id=3821091397"
+        target="_blank"
+        rel="noopener noreferrer">
+        WORKSHOP COLLECTION
+    </a>
+
+    <button
+        class="button copy"
+        id="copyButton"
+        type="button">
+        COPY SERVER IP
+    </button>
+
+    <div class="notice">
+        Garry's Mod and Steam are required.<br>
+        Your browser may ask permission to open Steam.<br>
+        If the join button doesn't work, connect manually.
+    </div>
+
+    <div class="footer">
+        FREEBUILD & KILL: REDUX
+        <p>BUILD. FIGHT. EXPERIMENT. REPEAT.</p>
+    </div>
+
+</div>
+
+<script>
+    const serverIP = "193.243.190.128:27015";
+    const copyButton = document.getElementById("copyButton");
+
+    copyButton.addEventListener("click", async function () {
+        try {
+            await navigator.clipboard.writeText(serverIP);
+            copyButton.textContent = "COPIED!";
+        } catch (error) {
+            copyButton.textContent = "COPY FAILED - SELECT IP ABOVE";
+        }
+    });
+</script>
+
+</body>
+</html>
