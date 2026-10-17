@@ -6,7 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Freebuild & Kill: Redux — Join Server</title>
-<meta name="description" content="Join Freebuild & Kill: Redux, a classic Garry's Mod sandbox community. Build, fight, and experiment.">
+
+<meta name="description"
+content="Join Freebuild & Kill: Redux, a Garry's Mod sandbox community. Build, fight, and experiment.">
 
 <link rel="icon" type="image/png" href="./logo.png">
 
@@ -127,6 +129,11 @@
         transform: translateY(-2px);
     }
 
+    .button:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 3px;
+    }
+
     .join {
         background: linear-gradient(
             135deg,
@@ -147,6 +154,16 @@
 
     .workshop:hover {
         background: #49515b;
+    }
+
+    /* Discord Community Button */
+    .discord {
+        background: #5865f2;
+        color: #fff;
+    }
+
+    .discord:hover {
+        background: #7380ff;
     }
 
     .copy {
@@ -199,6 +216,7 @@
 
 <main class="container">
 
+    <!-- Redux Logo -->
     <img
         class="logo"
         src="./logo.png"
@@ -214,13 +232,15 @@
     </p>
 
     <p class="description">
-        Old-school sandbox chaos with a fresh coat of paint.
-        Build ridiculous contraptions, engineer vehicles,
-        battle your friends, or just hang out.
+        Old-school sandbox chaos with a fresh coat
+        of paint. Build ridiculous contraptions,
+        engineer vehicles, battle your friends,
+        or just hang out.
     </p>
 
     <div class="divider"></div>
 
+    <!-- Server Address -->
     <div class="server-info">
         <small>SERVER ADDRESS</small>
 
@@ -229,12 +249,14 @@
         </div>
     </div>
 
+    <!-- Join Server -->
     <a
         class="button join"
         href="steam://connect/193.243.190.128:27015">
         ▶ JOIN SERVER
     </a>
 
+    <!-- Workshop Collection -->
     <a
         class="button workshop"
         href="https://steamcommunity.com/sharedfiles/filedetails/?id=3821091397"
@@ -243,6 +265,16 @@
         STEAM WORKSHOP COLLECTION
     </a>
 
+    <!-- Discord Community -->
+    <a
+        class="button discord"
+        href="https://discord.gg/Kd6CuTYBs6"
+        target="_blank"
+        rel="noopener noreferrer">
+        JOIN OUR DISCORD
+    </a>
+
+    <!-- Copy Server IP -->
     <button
         class="button copy"
         id="copyButton"
@@ -272,7 +304,13 @@
     copyButton.addEventListener("click", async () => {
         try {
             await navigator.clipboard.writeText(serverIP);
+
             copyButton.textContent = "COPIED!";
+
+            setTimeout(() => {
+                copyButton.textContent = "COPY SERVER IP";
+            }, 2000);
+
         } catch (error) {
             copyButton.textContent =
                 "COPY FAILED - SELECT IP ABOVE";
