@@ -1,0 +1,711 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freebuild & Kill: Redux</title>
+
+<style>
+:root {
+  --bg: #0d1014;
+  --panel: #191e25;
+  --panel2: #222933;
+  --border: #353d48;
+  --text: #f1f2f4;
+  --muted: #a5aeb9;
+  --orange: #f4743b;
+  --orange2: #ffab73;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+a {
+  color: var(--orange2);
+}
+
+.container {
+  max-width: 1040px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* HEADER */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.brand-mark {
+  position: relative;
+  flex-shrink: 0;
+  width: 76px;
+  height: 76px;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #ff975c, #a83821);
+  border: 1px solid #ffb185;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 22px #0008;
+  overflow: hidden;
+}
+
+.brand-mark span {
+  font-weight: 900;
+  font-style: italic;
+  font-size: 19px;
+  color: white;
+}
+
+.brand-mark img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header h1 {
+  margin: 0;
+  line-height: 1.1;
+  font-size: clamp(22px, 4vw, 32px);
+  letter-spacing: -0.6px;
+}
+
+.header h1 em {
+  color: var(--orange);
+  font-style: italic;
+}
+
+.tagline {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* HERO */
+
+.hero {
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  overflow: hidden;
+  background: var(--panel);
+  margin-bottom: 16px;
+}
+
+.hero-image {
+  height: 205px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 75% 45%, #944626 0%, transparent 50%),
+    linear-gradient(135deg, #303744, #12161c 75%);
+}
+
+.hero-image::before {
+  content: "BUILD  //  FIGHT  //  REPEAT";
+  position: absolute;
+  left: 25px;
+  bottom: 20px;
+  color: #ffffffaa;
+  font-size: clamp(17px, 3vw, 29px);
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.hero-image img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  padding: 20px 24px 23px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--orange2);
+}
+
+.hero-content h2 {
+  margin: 5px 0 8px;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  color: var(--muted);
+  max-width: 750px;
+  margin: 0 0 18px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: white;
+  background: var(--orange);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.button.secondary {
+  background: #303845;
+  border: 1px solid #465160;
+}
+
+.button:hover {
+  filter: brightness(1.15);
+}
+
+/* INFORMATION PANELS */
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 0;
+}
+
+.panel h3 {
+  font-size: 16px;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.panel h3::before {
+  content: "";
+  width: 4px;
+  height: 19px;
+  border-radius: 2px;
+  background: var(--orange);
+}
+
+.panel p {
+  margin: 0 0 11px;
+  color: var(--muted);
+}
+
+.panel p:last-child {
+  margin-bottom: 0;
+}
+
+.command {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  padding: 9px 0;
+  border-bottom: 1px solid #303742;
+}
+
+.command:last-child {
+  border-bottom: 0;
+}
+
+code {
+  background: #10151c;
+  border: 1px solid #404852;
+  color: var(--orange2);
+  font-family: Consolas, monospace;
+  font-size: 13px;
+  padding: 4px 7px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.command div {
+  color: #c8cdd4;
+  font-size: 13px;
+}
+
+strong {
+  color: white;
+}
+
+.note {
+  border-left: 3px solid var(--orange);
+  background: #2b2624;
+  padding: 10px 12px;
+  color: #edc6b2;
+  border-radius: 0 6px 6px 0;
+  font-size: 12px;
+  margin-top: 15px;
+}
+
+.rank {
+  padding: 9px 0;
+  border-bottom: 1px solid #303742;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.rank:last-child {
+  border: 0;
+}
+
+.rank-name {
+  width: 88px;
+  flex-shrink: 0;
+  font-weight: 800;
+  color: var(--orange2);
+  font-size: 12px;
+}
+
+.rank-desc {
+  color: #bec6d0;
+  font-size: 12px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+
+th, td {
+  text-align: left;
+  padding: 9px 7px;
+  border-bottom: 1px solid #343d47;
+  white-space: nowrap;
+}
+
+th {
+  color: var(--orange2);
+  background: #222a35;
+}
+
+td {
+  color: #d1d7de;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+/* SCREENSHOTS */
+
+.showcase-heading {
+  margin: 26px 0 12px;
+  font-size: 20px;
+}
+
+.showcase {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.shot {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.shot-visual {
+  height: 145px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: #ffffff60;
+  background:
+    linear-gradient(145deg, #3e342f, #1b2530);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.shot-visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shot-content {
+  padding: 13px 15px;
+}
+
+.shot-content strong {
+  font-size: 13px;
+}
+
+.shot-content p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 4px 0 0;
+}
+
+/* FOOTER */
+
+.footer {
+  padding: 25px 0 8px;
+  text-align: center;
+}
+
+.server-ip {
+  display: inline-block;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #151a21;
+  padding: 9px 14px;
+  font-family: Consolas, monospace;
+  color: var(--orange2);
+  user-select: all;
+  font-size: 13px;
+}
+
+.footer p {
+  color: #848f9d;
+  font-size: 12px;
+  margin: 12px 0 0;
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding: 12px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase {
+    grid-template-columns: 1fr;
+  }
+
+  .shot-visual {
+    height: 190px;
+  }
+
+  .hero-image {
+    height: 155px;
+  }
+
+  .hero-content {
+    padding: 17px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- IMAGE 1: LOGO -->
+  <header class="header">
+    <div class="brand-mark">
+      <span>FB&K</span>
+      <img src="assets/logo.webp" alt="Redux Logo"
+           onerror="this.style.display='none'">
+    </div>
+
+    <div>
+      <h1>Freebuild & Kill: <em>Redux</em></h1>
+      <p class="tagline">Old-school sandbox. New-school polish.</p>
+    </div>
+  </header>
+
+  <!-- IMAGE 2: BANNER -->
+  <section class="hero">
+    <div class="hero-image">
+      <img src="assets/banner.webp" alt="Redux Server Banner"
+           onerror="this.style.display='none'">
+    </div>
+
+    <div class="hero-content">
+      <div class="eyebrow">Welcome to the server</div>
+
+      <h2>Your sandbox. Your rules. Mostly.</h2>
+
+      <p>
+        Freebuild & Kill is back! Build ridiculous contraptions,
+        engineer with Wiremod and ACF, pilot vehicles, hang out
+        with friends, or opt into PvP and start some trouble.
+        The classic Garry's Mod sandbox experience, revived.
+      </p>
+
+      <div class="actions">
+        <a class="button" href="https://discord.gg/Kd6CuTYBs6">
+          JOIN DISCORD
+        </a>
+
+        <a class="button secondary"
+           href="https://steamcommunity.com/sharedfiles/filedetails/?id=3821091397">
+          WORKSHOP COLLECTION
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="layout">
+
+    <section class="panel">
+      <h3>Server Commands</h3>
+
+      <div class="command">
+        <code>!pvp</code>
+        <div>Toggle between Build Mode and PvP Mode.</div>
+      </div>
+
+      <div class="command">
+        <code>!redux</code>
+        <div>Show Redux help and server commands.</div>
+      </div>
+
+      <div class="command">
+        <code>!tip</code>
+        <div>Get a useful server tip.</div>
+      </div>
+
+      <div class="command">
+        <code>!rtv</code>
+        <div>Request a map vote.</div>
+      </div>
+
+      <div class="command">
+        <code>!motd</code>
+        <div>Reopen this welcome screen.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3>Build Mode & PvP</h3>
+
+      <p>
+        <strong>Build Mode:</strong> The default mode when you join.
+        Build and experiment without taking damage from other
+        players. Environmental and self-inflicted damage can
+        still hurt you.
+      </p>
+
+      <p>
+        <strong>PvP Mode:</strong> Use <code>!pvp</code> to fight
+        other PvP players. PvP remains enabled after death,
+        but resets to Build Mode when you reconnect.
+      </p>
+
+      <div class="note">
+        You must wait 10 seconds after dealing or receiving
+        combat damage before switching out of PvP.
+        PvP players also cannot use noclip.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3>Server Ranks</h3>
+
+      <div class="rank">
+        <span class="rank-name">OWNER</span>
+        <span class="rank-desc">Server owner and full administration.</span>
+      </div>
+
+      <div class="rank">
+        <span class="rank-name">ADMIN</span>
+        <span class="rank-desc">Server management and moderation.</span>
+      </div>
+
+      <div class="rank">
+        <span class="rank-name">MOD</span>
+        <span class="rank-desc">Moderation and player assistance.</span>
+      </div>
+
+      <div class="rank">
+        <span class="rank-name">TRUSTED</span>
+        <span class="rank-desc">Recognized community member with higher limits.</span>
+      </div>
+
+      <div class="rank">
+        <span class="rank-name">USER</span>
+        <span class="rank-desc">Default rank for regular players.</span>
+      </div>
+
+      <div class="rank">
+        <span class="rank-name">MINGE</span>
+        <span class="rank-desc">Restricted rank for disruptive players.</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3>Building Limits</h3>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Props</th>
+              <th>SENTs</th>
+              <th>Vehicles</th>
+              <th>E2</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>OWNER</td><td>450</td><td>75</td><td>8</td><td>25</td>
+            </tr>
+            <tr>
+              <td>ADMIN</td><td>450</td><td>75</td><td>8</td><td>25</td>
+            </tr>
+            <tr>
+              <td>MOD</td><td>450</td><td>75</td><td>8</td><td>25</td>
+            </tr>
+            <tr>
+              <td>TRUSTED</td><td>450</td><td>75</td><td>8</td><td>25</td>
+            </tr>
+            <tr>
+              <td>USER</td><td>300</td><td>50</td><td>6</td><td>20</td>
+            </tr>
+            <tr>
+              <td>MINGE</td><td>10</td><td>0</td><td>0</td><td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note">
+        Build responsibly. Respect other players'
+        creations and avoid deliberately lagging the server.
+      </div>
+    </section>
+
+    <section class="panel full">
+      <h3>The Basics</h3>
+
+      <p>
+        <strong>Build whatever you want.</strong>
+        Wiremod machines, vehicles, structures, elaborate
+        weapon systems, or complete nonsense are welcome.
+      </p>
+
+      <p>
+        <strong>Keep the chaos consensual.</strong>
+        Don't grief other people's builds or deliberately
+        disrupt players who just want to build.
+      </p>
+
+      <p>
+        <strong>Need help or want to report a problem?</strong>
+        Contact staff or join the Discord community.
+      </p>
+    </section>
+
+  </main>
+
+  <h2 class="showcase-heading">The Redux Experience</h2>
+
+  <!-- IMAGES 3, 4 AND 5 -->
+  <section class="showcase">
+
+    <article class="shot">
+      <div class="shot-visual">
+        ACF
+        <img src="assets/engineering.webp"
+             alt="Wiremod and ACF Builds"
+             loading="lazy"
+             onerror="this.style.display='none'">
+      </div>
+      <div class="shot-content">
+        <strong>BUILD SOMETHING INSANE</strong>
+        <p>ACF, Wiremod, advanced engineering, and more.</p>
+      </div>
+    </article>
+
+    <article class="shot">
+      <div class="shot-visual">
+        PVP
+        <img src="assets/combat.webp"
+             alt="Combat and Vehicles"
+             loading="lazy"
+             onerror="this.style.display='none'">
+      </div>
+      <div class="shot-content">
+        <strong>OPTIONAL MAYHEM</strong>
+        <p>Vehicles, weapons, and player-driven combat.</p>
+      </div>
+    </article>
+
+    <article class="shot">
+      <div class="shot-visual">
+        WTF
+        <img src="assets/chaos.webp"
+             alt="Garry's Mod Sandbox Chaos"
+             loading="lazy"
+             onerror="this.style.display='none'">
+      </div>
+      <div class="shot-content">
+        <strong>CLASSIC GMOD NONSENSE</strong>
+        <p>Because sometimes the dumbest ideas are the best.</p>
+      </div>
+    </article>
+
+  </section>
+
+  <footer class="footer">
+    <div class="server-ip">193.243.190.128:27015</div>
+
+    <p>
+      Freebuild & Kill: Redux
+      &bull;
+      Build dumb stuff. Blow up dumber stuff.
+      &bull;
+      Have fun.
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>
